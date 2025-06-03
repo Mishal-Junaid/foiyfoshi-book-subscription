@@ -195,8 +195,18 @@ exports.login = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse('Invalid credentials', 401));
   }
 
+  // Debug logging for admin bypass
+  console.log('🔍 LOGIN DEBUG INFO:');
+  console.log('User email:', user.email);
+  console.log('User role:', user.role);
+  console.log('User isVerified:', user.isVerified);
+  console.log('Is admin role?:', user.role === 'admin');
+  console.log('Should bypass verification?:', user.role === 'admin');
+
   // Skip verification for admin users OR if user is already verified
   if (!user.isVerified && user.role !== 'admin') {
+    console.log('🚫 User requires verification - entering OTP flow');
+    
     const otp = user.generateOTP();
     await user.save({ validateBeforeSave: false });
 
@@ -264,8 +274,12 @@ exports.login = asyncHandler(async (req, res, next) => {
   }
 
   // If user is admin or verified, log them in directly
+  console.log('✅ BYPASSING VERIFICATION - Logging in user');
   if (user.role === 'admin') {
-    console.log('Admin user login bypass - verification not required');
+    console.log('🔑 Admin user login bypass - verification not required');
+  }
+  if (user.isVerified) {
+    console.log('✅ User is already verified');
   }
   
   sendTokenResponse(user, 200, res);
