@@ -41,12 +41,25 @@ app.use(helmet({
 // Rate limiting
 const limiter = rateLimit({
   windowMs: (process.env.RATE_LIMIT_WINDOW || 15) * 60 * 1000, // 15 minutes
-  max: process.env.RATE_LIMIT_MAX_REQUESTS || 100, // limit each IP to 100 requests per windowMs
-  message: 'Too many requests from this IP, please try again later.'
+  max: process.env.RATE_LIMIT_MAX_REQUESTS || 1000, // Increased from 100 to 1000 requests per windowMs
+  message: 'Too many requests from this IP, please try again later.',
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  // Skip rate limiting for admin endpoints in development
+  skip: (req) => {
+    if (process.env.NODE_ENV === 'development') {
+      return true; // Skip rate limiting in development
+    }
+    return false;
+  }
 });
 
+// Only apply rate limiting in production, and with more generous limits
 if (process.env.NODE_ENV === 'production') {
   app.use(limiter);
+  console.log('🚦 Rate limiting enabled: 1000 requests per 15 minutes');
+} else {
+  console.log('🚦 Rate limiting disabled for development');
 }
 
 // Body parser
@@ -66,8 +79,17 @@ const corsOptions = {
   credentials: true,
   optionsSuccessStatus: 200,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'x-admin-override', 'admin-email']
 };
+
+// Debug CORS configuration
+console.log('🌐 CORS Configuration:');
+console.log('Environment:', process.env.NODE_ENV);
+console.log('Allowed origins:', corsOptions.origin);
+if (process.env.CORS_ORIGIN) {
+  console.log('Additional CORS origin from env:', process.env.CORS_ORIGIN);
+}
+
 app.use(cors(corsOptions));
 
 // Dev logging middleware
