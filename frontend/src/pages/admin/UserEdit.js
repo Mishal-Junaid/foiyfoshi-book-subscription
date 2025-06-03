@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import AdminLayout from '../../components/layout/AdminLayout';
 import { FaUser, FaMapMarkerAlt, FaBook, FaSave, FaArrowLeft, FaTimes } from 'react-icons/fa';
@@ -191,7 +191,7 @@ const UserEdit = () => {
   const [newGenre, setNewGenre] = useState('');
   const [newAuthor, setNewAuthor] = useState('');
 
-  const fetchUser = async () => {
+  const fetchUser = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -239,7 +239,7 @@ const UserEdit = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id, addNotification]);
 
   useEffect(() => {
     if (!isNewUser) {
