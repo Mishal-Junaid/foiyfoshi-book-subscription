@@ -370,8 +370,10 @@ const availableFrequencies = ['Daily', 'Few times a week', 'Weekly', 'Monthly', 
 function Users() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [totalUsers, setTotalUsers] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedUser, setSelectedUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -401,6 +403,7 @@ function Users() {
   const fetchUsers = useCallback(async (page = 1, search = '', filters = {}) => {
     try {
       setLoading(true);
+      setError(null);
       
       // Add headers for fallback admin authentication if needed
       const headers = {};
@@ -437,11 +440,14 @@ function Users() {
       if (response.data && response.data.success) {
         setUsers(response.data.data || []);
         setTotalPages(response.data.totalPages || 1);
+        setTotalUsers(response.data.totalUsers || 0);
       } else {
         console.error('Unexpected API response format:', response.data);
+        setError('Unexpected API response format');
       }
     } catch (err) {
       console.error('Error fetching users:', err);
+      setError(err.response?.data?.message || err.message || 'Failed to fetch users');
     } finally {
       setLoading(false);
     }
