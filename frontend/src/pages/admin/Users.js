@@ -453,6 +453,7 @@ function Users() {
     }
   }, []);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const filters = {
       genres: selectedGenres,
@@ -460,7 +461,7 @@ function Users() {
       frequencies: selectedFrequencies
     };
     fetchUsers(currentPage, searchTerm, filters);
-  }, [currentPage, selectedGenres, selectedLanguages, selectedFrequencies, fetchUsers, searchTerm]);
+  }, [currentPage, selectedGenres, selectedLanguages, selectedFrequencies, searchTerm]);
   
   const handleSearch = (e) => {
     e.preventDefault();

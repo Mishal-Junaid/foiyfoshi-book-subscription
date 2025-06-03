@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import AdminLayout from '../../components/layout/AdminLayout';
-import { FaUser, FaMapMarkerAlt, FaBook, FaSave, FaTimes, FaArrowLeft } from 'react-icons/fa';
+import { FaUser, FaMapMarkerAlt, FaBook, FaSave, FaArrowLeft, FaTimes } from 'react-icons/fa';
 import { api } from '../../services/api';
-import { useNotification } from '../../contexts/NotificationContext';
+import { useNotification } from '../../components/ui/Notification';
 import { FormInput, FormSelect, FormTextarea, FormCheckbox } from '../../components/ui/FormElements';
 import styled from 'styled-components';
 import Button from '../../components/ui/Button';

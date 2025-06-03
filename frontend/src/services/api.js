@@ -4,7 +4,7 @@ import environment from '../config/environment';
 const API_URL = environment.API_URL || 'http://localhost:5000';
 
 const api = axios.create({
-  baseURL: `${API_URL}/api`,
+  baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
