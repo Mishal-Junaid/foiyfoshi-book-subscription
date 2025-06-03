@@ -39,9 +39,9 @@ exports.register = asyncHandler(async (req, res, next) => {
   // Create OTP email
   const otpEmail = {
     email: user.email,
-    subject: 'FoiyFoshi Account Verification OTP',
+    subject: 'foiyfoshi Account Verification OTP',
     html: `
-      <h1>Welcome to FoiyFoshi - Maldives Book Subscription Box</h1>
+      <h1>Welcome to foiyfoshi - Maldives Book Subscription Box</h1>
       <p>Your account verification OTP is: <strong>${otp}</strong></p>
       <p>This OTP will expire in 10 minutes.</p>
       <p>Thank you for joining our community of book lovers!</p>
@@ -220,9 +220,9 @@ exports.login = asyncHandler(async (req, res, next) => {
     // Create OTP email
     const otpEmail = {
       email: user.email,
-      subject: 'FoiyFoshi Account Verification OTP',
+      subject: 'foiyfoshi Account Verification OTP',
       html: `
-        <h1>FoiyFoshi - Account Verification</h1>
+        <h1>foiyfoshi - Account Verification</h1>
         <p>Your account verification OTP is: <strong>${otp}</strong></p>
         <p>This OTP will expire in 10 minutes.</p>
         <p>Thank you for joining our community of book lovers!</p>
@@ -321,9 +321,9 @@ exports.resendOTP = asyncHandler(async (req, res, next) => {
   // Create OTP email
   const otpEmail = {
     email: user.email,
-    subject: 'FoiyFoshi Account Verification OTP',
+    subject: 'foiyfoshi Account Verification OTP',
     html: `
-      <h1>FoiyFoshi - Account Verification</h1>
+      <h1>foiyfoshi - Account Verification</h1>
       <p>Your new account verification OTP is: <strong>${otp}</strong></p>
       <p>This OTP will expire in 10 minutes.</p>
       <p>Thank you for joining our community of book lovers!</p>
@@ -474,9 +474,9 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
   // Create reset email
   const resetEmail = {
     email: user.email,
-    subject: 'FoiyFoshi Password Reset OTP',
+    subject: 'foiyfoshi Password Reset OTP',
     html: `
-      <h1>FoiyFoshi - Password Reset</h1>
+      <h1>foiyfoshi - Password Reset</h1>
       <p>You requested a password reset. Your OTP is: <strong>${otp}</strong></p>
       <p>This OTP will expire in 10 minutes.</p>
       <p>If you did not request this, please ignore this email.</p>

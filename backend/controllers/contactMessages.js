@@ -40,7 +40,7 @@ Message:
 ${message}
 
 --
-This message was submitted through the FoiyFoshi Books contact form.
+This message was submitted through the foiyfoshi contact form.
 View and reply to this message in the admin dashboard.
       `,
       html: `
@@ -51,7 +51,7 @@ View and reply to this message in the admin dashboard.
         <h3>Message:</h3>
         <p>${message.replace(/\n/g, '<br>')}</p>
         <hr>
-        <p><em>This message was submitted through the FoiyFoshi Books contact form.<br>
+        <p><em>This message was submitted through the foiyfoshi contact form.<br>
         View and reply to this message in the admin dashboard.</em></p>
       `
     });
@@ -196,14 +196,14 @@ exports.replyToMessage = asyncHandler(async (req, res) => {
       text: `
 Dear ${message.name},
 
-Thank you for contacting FoiyFoshi Books. Here's our response to your message:
+Thank you for contacting foiyfoshi. Here's our response to your message:
 
 ${replyMessage}
 
 If you have any further questions, please don't hesitate to contact us.
 
 Best regards,
-The FoiyFoshi Books Team
+The foiyfoshi Team
 
 ---
 Original Message:
@@ -212,11 +212,11 @@ ${message.message}
       `,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #805A29;">FoiyFoshi Books</h2>
+          <h2 style="color: #805A29;">foiyfoshi</h2>
           
           <p>Dear ${message.name},</p>
           
-          <p>Thank you for contacting FoiyFoshi Books. Here's our response to your message:</p>
+          <p>Thank you for contacting foiyfoshi. Here's our response to your message:</p>
           
           <div style="background-color: #f8f9fa; padding: 20px; border-left: 4px solid #805A29; margin: 20px 0;">
             ${replyMessage.replace(/\n/g, '<br>')}
@@ -224,7 +224,7 @@ ${message.message}
           
           <p>If you have any further questions, please don't hesitate to contact us.</p>
           
-          <p>Best regards,<br>The FoiyFoshi Books Team</p>
+          <p>Best regards,<br>The foiyfoshi Team</p>
           
           <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
           

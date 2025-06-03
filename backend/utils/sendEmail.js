@@ -9,27 +9,34 @@ const sendEmail = async (options) => {
   let transporter;
   let info;
   
-  // Check if we have proper email credentials
-  const hasCredentials = process.env.EMAIL_USERNAME && 
-                        process.env.EMAIL_PASSWORD && 
-                        process.env.EMAIL_PASSWORD !== 'your_app_password_here';
+  // Check if we have proper email credentials (support both EMAIL_USER/USERNAME)
+  const emailUser = process.env.EMAIL_USER || process.env.EMAIL_USERNAME;
+  const emailPass = process.env.EMAIL_PASS || process.env.EMAIL_PASSWORD;
+  
+  const hasCredentials = emailUser && 
+                        emailPass && 
+                        emailPass !== 'your_app_password_here' &&
+                        emailPass !== 'bookbox03136'; // Don't expose default passwords
   
   // Use real email credentials if available, otherwise use test account
   if (hasCredentials) {
-    console.log('📧 Using configured email credentials:', process.env.EMAIL_USERNAME);
+    console.log('📧 Using configured email credentials:', emailUser);
     
     transporter = nodemailer.createTransport({
       host: process.env.EMAIL_HOST || 'smtpout.secureserver.net',
-      port: process.env.EMAIL_PORT || 587,
-      secure: process.env.EMAIL_SECURE === 'true' || false,
+      port: parseInt(process.env.EMAIL_PORT) || 587,
+      secure: process.env.EMAIL_SECURE === 'true',
       auth: {
-        user: process.env.EMAIL_USERNAME,
-        pass: process.env.EMAIL_PASSWORD,
+        user: emailUser,
+        pass: emailPass,
       },
+      tls: {
+        rejectUnauthorized: false // Allow self-signed certificates
+      }
     });
   } else {
     // Fallback to Ethereal test account for development
-    console.log('🔧 No email credentials found, using test email account...');
+    console.log('🔧 No valid email credentials found, using test email account...');
     
     try {
       // Create test account using ethereal.email (no real emails sent)
@@ -53,9 +60,9 @@ const sendEmail = async (options) => {
     }
   }
 
-  // Create message object with basic properties
+  // Create message object with basic properties - Updated branding
   const message = {
-    from: `FoiyFoshi Books <${process.env.EMAIL_FROM || 'noreply@foiyfoshi.mv'}>`,
+    from: `foiyfoshi <${process.env.EMAIL_FROM_ADDRESS || process.env.EMAIL_USER || process.env.EMAIL_USERNAME || 'noreply@foiyfoshi.mv'}>`,
     to: options.to || options.email,
     subject: options.subject,
   };
@@ -68,6 +75,10 @@ const sendEmail = async (options) => {
   }
   
   try {
+    // Verify transporter configuration
+    await transporter.verify();
+    console.log('📧 SMTP configuration verified successfully');
+    
     // Send the email
     info = await transporter.sendMail(message);
     
@@ -75,6 +86,7 @@ const sendEmail = async (options) => {
     if (hasCredentials) {
       console.log('✅ Real email sent successfully to:', message.to);
       console.log('📧 Subject:', options.subject);
+      console.log('📧 Message ID:', info.messageId);
     } else {
       const previewUrl = nodemailer.getTestMessageUrl(info);
       console.log('✅ Test email sent successfully!');
@@ -94,6 +106,12 @@ const sendEmail = async (options) => {
     return info;
   } catch (error) {
     console.error('❌ Email sending failed:', error.message);
+    console.error('❌ Error details:', {
+      code: error.code,
+      command: error.command,
+      response: error.response,
+      responseCode: error.responseCode
+    });
     throw error;
   }
 };

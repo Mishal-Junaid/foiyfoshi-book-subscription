@@ -75,8 +75,15 @@ const SuccessAlert = styled(motion.div)`
 
 const OTPInputContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 0.5rem;
   margin-bottom: 2rem;
+  max-width: 100%;
+  overflow: hidden;
+  
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    gap: 0.3rem;
+  }
 `;
 
 const OTPDigit = styled.input`
@@ -86,7 +93,7 @@ const OTPDigit = styled.input`
   text-align: center;
   border: 1px solid #e0e0e0;
   border-radius: 4px;
-  margin: 0 5px;
+  flex-shrink: 0;
   
   &:focus {
     outline: none;
@@ -95,9 +102,15 @@ const OTPDigit = styled.input`
   }
   
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    width: 40px;
-    height: 50px;
-    font-size: 1.2rem;
+    width: 35px;
+    height: 45px;
+    font-size: 1.1rem;
+  }
+  
+  @media (max-width: 350px) {
+    width: 30px;
+    height: 40px;
+    font-size: 1rem;
   }
 `;
 

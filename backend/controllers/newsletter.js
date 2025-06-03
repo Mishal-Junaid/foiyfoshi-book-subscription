@@ -37,16 +37,16 @@ exports.subscribe = asyncHandler(async (req, res, next) => {
   try {
     await sendEmail({
       email: subscription.email,
-      subject: 'Welcome to FoiyFoshi Newsletter!',
+      subject: 'Welcome to foiyfoshi Newsletter!',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <header style="text-align: center; padding: 20px; background-color: #805A29;">
-            <h1 style="color: #ffffff; margin: 0;">FoiyFoshi Books</h1>
+            <h1 style="color: #ffffff; margin: 0;">foiyfoshi</h1>
           </header>
           
           <div style="padding: 20px; border: 1px solid #eee; border-top: none;">
             <h2>Welcome to Our Newsletter!</h2>
-            <p>Thank you for subscribing to the FoiyFoshi Books newsletter!</p>
+            <p>Thank you for subscribing to the foiyfoshi newsletter!</p>
             
             <p>You'll now receive:</p>
             <ul>
@@ -58,12 +58,12 @@ exports.subscribe = asyncHandler(async (req, res, next) => {
             
             <p>We're excited to have you as part of our reading community!</p>
             
-            <p>Happy reading,<br>The FoiyFoshi Books Team</p>
+            <p>Happy reading,<br>The foiyfoshi Team</p>
           </div>
           
           <footer style="text-align: center; padding: 15px; font-size: 12px; color: #666;">
             <p>You can unsubscribe at any time by clicking <a href="https://foiyfoshi.mv/unsubscribe?email=${subscription.email}">here</a></p>
-            <p>&copy; ${new Date().getFullYear()} FoiyFoshi Books. All rights reserved.</p>
+            <p>&copy; ${new Date().getFullYear()} foiyfoshi. All rights reserved.</p>
           </footer>
         </div>
       `,

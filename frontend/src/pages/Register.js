@@ -73,39 +73,6 @@ const FormRow = styled.div`
   }
 `;
 
-const TermsText = styled.div`
-  margin-top: 0.5rem;
-  font-size: 0.85rem;
-  color: #666;
-  
-  a {
-    color: ${props => props.theme.colors.gold};
-    
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
-
-const Divider = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 2rem 0;
-  
-  &::before, &::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background-color: #eee;
-  }
-  
-  span {
-    padding: 0 1rem;
-    color: #999;
-    font-size: 0.9rem;
-  }
-`;
-
 const LoginPrompt = styled.div`
   text-align: center;
   color: #666;
@@ -127,8 +94,7 @@ const Register = () => {
     email: '',
     phone: '',
     password: '',
-    confirmPassword: '',
-    acceptTerms: false
+    confirmPassword: ''
   });
   
   const [formErrors, setFormErrors] = useState({});
@@ -180,10 +146,6 @@ const Register = () => {
     
     if (formData.password !== formData.confirmPassword) {
       errors.confirmPassword = 'Passwords do not match';
-    }
-    
-    if (!formData.acceptTerms) {
-      errors.acceptTerms = 'You must accept the terms and privacy policy';
     }
     
     setFormErrors(errors);
@@ -336,17 +298,6 @@ const Register = () => {
               required
             />
           </FormRow>
-          
-          <FormCheckbox
-            label="I accept the Terms of Service and Privacy Policy"
-            name="acceptTerms"
-            checked={formData.acceptTerms}
-            onChange={handleChange}
-            error={formErrors.acceptTerms}
-          />
-          <TermsText>
-            By creating an account, you agree to our <Link to="/terms">Terms of Service</Link> and <Link to="/privacy">Privacy Policy</Link>.
-          </TermsText>
           
           <Button 
             type="submit" 

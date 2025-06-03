@@ -105,7 +105,7 @@ exports.createOrder = asyncHandler(async (req, res, next) => {
   // Send order confirmation email
   const orderConfirmationEmail = {
     email: req.user.email,
-    subject: 'FoiyFoshi - Order Confirmation',
+    subject: 'foiyfoshi - Order Confirmation',
     html: `
       <h1>Thank you for your order!</h1>
       <p>Your order number is: ${order._id}</p>
@@ -115,7 +115,7 @@ exports.createOrder = asyncHandler(async (req, res, next) => {
       ${order.paymentMethod === 'bankTransfer' 
         ? '<p>Please upload your payment receipt in your account dashboard to confirm your order.</p>' 
         : ''}
-      <p>Thank you for choosing FoiyFoshi!</p>
+      <p>Thank you for choosing foiyfoshi!</p>
     `,
   };
 
@@ -228,11 +228,11 @@ exports.updatePaymentStatus = asyncHandler(async (req, res, next) => {
       // Payment verified email
       emailContent = {
         email: order.user.email,
-        subject: `Payment Verified - Order #${order.orderNumber || order._id.toString().slice(-6).toUpperCase()} - FoiyFoshi Books`,
+        subject: `Payment Verified - Order #${order.orderNumber || order._id.toString().slice(-6).toUpperCase()} - foiyfoshi`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
             <header style="text-align: center; padding: 20px; background-color: #805A29;">
-              <h1 style="color: #ffffff; margin: 0;">FoiyFoshi Books</h1>
+              <h1 style="color: #ffffff; margin: 0;">foiyfoshi</h1>
             </header>
             
             <div style="padding: 20px; border: 1px solid #eee; border-top: none;">
@@ -250,14 +250,14 @@ exports.updatePaymentStatus = asyncHandler(async (req, res, next) => {
               
               <p>Your order is now being processed and will be shipped shortly. You'll receive another email with tracking information once your order is on its way.</p>
               
-              <p>Thank you for choosing FoiyFoshi Books for your reading adventures!</p>
+              <p>Thank you for choosing foiyfoshi for your reading adventures!</p>
               
-              <p>Regards,<br>The FoiyFoshi Books Team</p>
+              <p>Regards,<br>The foiyfoshi Team</p>
             </div>
             
             <footer style="text-align: center; padding: 15px; font-size: 12px; color: #666;">
               <p>If you have any questions, please contact our support at support@foiyfoshi.mv</p>
-              <p>&copy; ${new Date().getFullYear()} FoiyFoshi Books. All rights reserved.</p>
+              <p>&copy; ${new Date().getFullYear()} foiyfoshi. All rights reserved.</p>
             </footer>
           </div>
         `,
@@ -266,11 +266,11 @@ exports.updatePaymentStatus = asyncHandler(async (req, res, next) => {
       // Payment rejected email
       emailContent = {
         email: order.user.email,
-        subject: `Action Required: Payment Issue - Order #${order.orderNumber || order._id.toString().slice(-6).toUpperCase()} - FoiyFoshi Books`,
+        subject: `Action Required: Payment Issue - Order #${order.orderNumber || order._id.toString().slice(-6).toUpperCase()} - foiyfoshi`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
             <header style="text-align: center; padding: 20px; background-color: #805A29;">
-              <h1 style="color: #ffffff; margin: 0;">FoiyFoshi Books</h1>
+              <h1 style="color: #ffffff; margin: 0;">foiyfoshi</h1>
             </header>
             
             <div style="padding: 20px; border: 1px solid #eee; border-top: none;">
@@ -281,7 +281,7 @@ exports.updatePaymentStatus = asyncHandler(async (req, res, next) => {
               
               <div style="background-color: #fff8e1; padding: 15px; margin: 20px 0; border-radius: 5px; border-left: 4px solid #ffc107;">
                 <h3 style="margin-top: 0; color: #805A29;">What's Next:</h3>
-                <p>Please log in to your FoiyFoshi account and upload a clear image of your payment receipt for this order.</p>
+                <p>Please log in to your foiyfoshi account and upload a clear image of your payment receipt for this order.</p>
                 <p>Make sure the receipt shows:</p>
                 <ul>
                   <li>Transaction date and time</li>
@@ -296,12 +296,12 @@ exports.updatePaymentStatus = asyncHandler(async (req, res, next) => {
               
               <p>Thank you for your understanding.</p>
               
-              <p>Regards,<br>The FoiyFoshi Books Team</p>
+              <p>Regards,<br>The foiyfoshi Team</p>
             </div>
             
             <footer style="text-align: center; padding: 15px; font-size: 12px; color: #666;">
               <p>If you have any questions, please contact our support at support@foiyfoshi.mv</p>
-              <p>&copy; ${new Date().getFullYear()} FoiyFoshi Books. All rights reserved.</p>
+              <p>&copy; ${new Date().getFullYear()} foiyfoshi. All rights reserved.</p>
             </footer>
           </div>
         `,
@@ -345,13 +345,13 @@ exports.updateTrackingNumber = asyncHandler(async (req, res, next) => {
   // Send tracking information email
   const trackingEmail = {
     email: req.user.email,
-    subject: 'FoiyFoshi - Order Shipped',
+    subject: 'foiyfoshi - Order Shipped',
     html: `
       <h1>Your order has been shipped!</h1>
       <p>Order number: ${order._id}</p>
       <p>Tracking number: ${trackingNumber}</p>
       <p>You can track your package using this number.</p>
-      <p>Thank you for choosing FoiyFoshi!</p>
+      <p>Thank you for choosing foiyfoshi!</p>
     `,
   };
 
@@ -485,7 +485,7 @@ exports.generateInvoice = asyncHandler(async (req, res, next) => {
   doc.pipe(res);
 
   // Add invoice content
-  doc.fontSize(20).text('FoiyFoshi Books', 50, 50);
+  doc.fontSize(20).text('foiyfoshi', 50, 50);
   doc.fontSize(16).text('INVOICE', 50, 80);
   
   doc.fontSize(12);
@@ -564,7 +564,7 @@ exports.generateInvoice = asyncHandler(async (req, res, next) => {
 
   // Footer
   doc.text('Thank you for your business!', 50, yPosition + 80);
-  doc.text('FoiyFoshi Books - Your trusted book partner', 50, yPosition + 100);
+  doc.text('foiyfoshi - Your trusted book partner', 50, yPosition + 100);
 
   // Finalize the PDF
   doc.end();
