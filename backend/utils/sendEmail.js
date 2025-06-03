@@ -15,8 +15,7 @@ const sendEmail = async (options) => {
   
   const hasCredentials = emailUser && 
                         emailPass && 
-                        emailPass !== 'your_app_password_here' &&
-                        emailPass !== 'bookbox03136'; // Don't expose default passwords
+                        emailPass !== 'your_app_password_here';
   
   // Use real email credentials if available, otherwise use test account
   if (hasCredentials) {
