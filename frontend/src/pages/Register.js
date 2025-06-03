@@ -73,6 +73,25 @@ const FormRow = styled.div`
   }
 `;
 
+const Divider = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 2rem 0;
+  
+  &::before, &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-color: #eee;
+  }
+  
+  span {
+    padding: 0 1rem;
+    color: #999;
+    font-size: 0.9rem;
+  }
+`;
+
 const LoginPrompt = styled.div`
   text-align: center;
   color: #666;

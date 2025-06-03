@@ -22,7 +22,9 @@ const OTPCard = styled(motion.div)`
   padding: 2.5rem;
   
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    padding: 2rem 1.5rem;
+    padding: 2rem 1rem;
+    max-width: 100%;
+    margin: 0 0.5rem;
   }
 `;
 
@@ -77,19 +79,27 @@ const OTPInputContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 0.5rem;
-  margin-bottom: 2rem;
-  max-width: 100%;
-  overflow: hidden;
+  margin: 2rem auto;
+  max-width: 330px;
+  padding: 0 1rem;
   
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    gap: 0.4rem;
+    max-width: 280px;
+    padding: 0 0.5rem;
+  }
+  
+  @media (max-width: 350px) {
     gap: 0.3rem;
+    max-width: 240px;
+    padding: 0 0.25rem;
   }
 `;
 
 const OTPDigit = styled.input`
-  width: 50px;
-  height: 60px;
-  font-size: 1.5rem;
+  width: 45px;
+  height: 55px;
+  font-size: 1.4rem;
   text-align: center;
   border: 1px solid #e0e0e0;
   border-radius: 4px;
@@ -102,15 +112,15 @@ const OTPDigit = styled.input`
   }
   
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    width: 35px;
-    height: 45px;
-    font-size: 1.1rem;
+    width: 38px;
+    height: 48px;
+    font-size: 1.2rem;
   }
   
   @media (max-width: 350px) {
-    width: 30px;
-    height: 40px;
-    font-size: 1rem;
+    width: 32px;
+    height: 42px;
+    font-size: 1.1rem;
   }
 `;
 
