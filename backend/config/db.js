@@ -10,6 +10,13 @@ let inMemoryData = {
 
 const connectDB = async () => {
   try {
+    // Debug: Log environment variable status
+    console.log('🔍 Environment Debug Info:');
+    console.log('NODE_ENV:', process.env.NODE_ENV);
+    console.log('MONGO_URI exists:', !!process.env.MONGO_URI);
+    console.log('MONGO_URI value:', process.env.MONGO_URI ? process.env.MONGO_URI.substring(0, 20) + '...' : 'undefined');
+    console.log('All env vars starting with MONGO:', Object.keys(process.env).filter(key => key.includes('MONGO')));
+    
     let mongoUri = process.env.MONGO_URI;
     
     // If no MONGO_URI is provided, try to use a free MongoDB Atlas cluster or fallback
@@ -52,6 +59,7 @@ const connectDB = async () => {
       }
     } else {
       // Use provided MONGO_URI
+      console.log('✅ Using provided MONGO_URI');
       const conn = await mongoose.connect(mongoUri, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
