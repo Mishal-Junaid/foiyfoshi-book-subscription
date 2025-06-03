@@ -1,0 +1,22 @@
+/* Place this in index.css */
+.image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9d9aa;
+    color: #8d5524;
+    width: 100%;
+    height: 300px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+/* Use this in your components when images fail to load */
+/*
+<div className="image-placeholder">
+    <div>
+        <h3>FoiyFoshi</h3>
+        <p>Image coming soon</p>
+    </div>
+</div>
+*/
