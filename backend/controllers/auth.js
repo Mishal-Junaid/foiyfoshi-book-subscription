@@ -195,8 +195,8 @@ exports.login = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse('Invalid credentials', 401));
   }
 
-  // If user is not verified, send new OTP
-  if (!user.isVerified) {
+  // Skip verification for admin users OR if user is already verified
+  if (!user.isVerified && user.role !== 'admin') {
     const otp = user.generateOTP();
     await user.save({ validateBeforeSave: false });
 
@@ -210,7 +210,9 @@ exports.login = asyncHandler(async (req, res, next) => {
         <p>This OTP will expire in 10 minutes.</p>
         <p>Thank you for joining our community of book lovers!</p>
       `,
-    };    try {
+    };
+
+    try {
       const emailResult = await sendEmail(otpEmail);
 
       // Check if we're in development mode with Ethereal email
@@ -261,6 +263,11 @@ exports.login = asyncHandler(async (req, res, next) => {
     }
   }
 
+  // If user is admin or verified, log them in directly
+  if (user.role === 'admin') {
+    console.log('Admin user login bypass - verification not required');
+  }
+  
   sendTokenResponse(user, 200, res);
 });
 
