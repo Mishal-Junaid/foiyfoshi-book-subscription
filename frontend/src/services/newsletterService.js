@@ -7,10 +7,10 @@ import api from './api';
  */
 export const subscribeToNewsletter = async (email) => {
   try {
-    const res = await api.post('/api/newsletter/subscribe', { email });
+    const res = await api.post('/newsletter/subscribe', { email });
     return res.data;
   } catch (error) {
-    console.error('Error subscribing to newsletter:', error);
+    console.error('Newsletter subscription error:', error);
     throw error;
   }
 };
@@ -22,10 +22,10 @@ export const subscribeToNewsletter = async (email) => {
  */
 export const unsubscribeFromNewsletter = async (email) => {
   try {
-    const res = await api.post('/api/newsletter/unsubscribe', { email });
+    const res = await api.post('/newsletter/unsubscribe', { email });
     return res.data;
   } catch (error) {
-    console.error('Error unsubscribing from newsletter:', error);
+    console.error('Newsletter unsubscribe error:', error);
     throw error;
   }
 };
@@ -38,7 +38,7 @@ export const unsubscribeFromNewsletter = async (email) => {
 export const getNewsletterSubscribers = async (params = {}) => {
   try {
     const queryString = new URLSearchParams(params).toString();
-    const res = await api.get(`/api/newsletter/subscribers?${queryString}`);
+    const res = await api.get(`/newsletter/subscribers?${queryString}`);
     return res.data;
   } catch (error) {
     console.error('Error fetching newsletter subscribers:', error);
@@ -56,7 +56,7 @@ export const getNewsletterSubscribers = async (params = {}) => {
  */
 export const sendNewsletter = async (newsletterData) => {
   try {
-    const res = await api.post('/api/newsletter/send', newsletterData);
+    const res = await api.post('/newsletter/send', newsletterData);
     return res.data;
   } catch (error) {
     console.error('Error sending newsletter:', error);
@@ -71,10 +71,10 @@ export const sendNewsletter = async (newsletterData) => {
  */
 export const addNewsletterSubscriber = async (email) => {
   try {
-    const res = await api.post('/api/newsletter/subscribers', { email });
+    const res = await api.post('/newsletter/subscribers', { email });
     return res.data;
   } catch (error) {
-    console.error('Error adding newsletter subscriber:', error);
+    console.error('Error adding subscriber:', error);
     throw error;
   }
 };
@@ -86,10 +86,10 @@ export const addNewsletterSubscriber = async (email) => {
  */
 export const deleteNewsletterSubscriber = async (subscriberId) => {
   try {
-    const res = await api.delete(`/api/newsletter/subscribers/${subscriberId}`);
+    const res = await api.delete(`/newsletter/subscribers/${subscriberId}`);
     return res.data;
   } catch (error) {
-    console.error('Error deleting newsletter subscriber:', error);
+    console.error('Error removing subscriber:', error);
     throw error;
   }
 }; 
