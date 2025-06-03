@@ -57,14 +57,16 @@ app.use(express.urlencoded({ extended: false }));
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
     ? [
-        process.env.CORS_ORIGIN, 
-        'https://foiyfoshi.netlify.app', 
-        'https://foiy-foshi.netlify.app',  // Correct URL with hyphen
-        'https://your-custom-domain.com'
-      ]
+        'https://foiy-foshi.netlify.app',     // Primary Netlify URL (with hyphen)
+        'https://foiyfoshi.netlify.app',      // Alternative URL (without hyphen)
+        'https://your-custom-domain.com',     // Future custom domain
+        process.env.CORS_ORIGIN               // Any additional CORS origin from env
+      ].filter(Boolean)  // Remove undefined values
     : ['http://localhost:3000', 'http://localhost:3001'],
   credentials: true,
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 };
 app.use(cors(corsOptions));
 
