@@ -1,14 +1,13 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import { FaUser, FaMapMarkerAlt, FaBook, FaArrowLeft, FaSave, FaTimes } from 'react-icons/fa';
-
 import AdminLayout from '../../components/layout/AdminLayout';
-import Button from '../../components/ui/Button';
+import { FaUser, FaMapMarkerAlt, FaBook, FaSave, FaTimes } from 'react-icons/fa';
+import { api } from '../../services/api';
+import { useNotification } from '../../contexts/NotificationContext';
 import { FormInput, FormSelect, FormTextarea, FormCheckbox } from '../../components/ui/FormElements';
-import { useNotification } from '../../components/ui/Notification';
+import styled from 'styled-components';
+import Button from '../../components/ui/Button';
 import Spinner from '../../components/ui/Spinner';
-import api from '../../services/api';
 
 const Container = styled.div`
   padding: 2rem;
@@ -192,7 +191,7 @@ const UserEdit = () => {
   const [newGenre, setNewGenre] = useState('');
   const [newAuthor, setNewAuthor] = useState('');
 
-  const fetchUser = useCallback(async () => {
+  const fetchUser = async () => {
     try {
       setLoading(true);
       setError(null);
@@ -240,7 +239,7 @@ const UserEdit = () => {
     } finally {
       setLoading(false);
     }
-  }, [id, addNotification]);
+  };
 
   useEffect(() => {
     if (!isNewUser) {
