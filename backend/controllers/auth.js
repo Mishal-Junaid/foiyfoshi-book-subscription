@@ -6,7 +6,7 @@ const sendEmail = require('../utils/sendEmail');
 // @route   POST /api/auth/register
 // @access  Public
 exports.register = asyncHandler(async (req, res, next) => {
-  const { name, email, phone, password } = req.body;
+  const { name, email, phone, password, role } = req.body;
 
   // Check if user already exists
   let user = await User.findOne({ email });
@@ -15,14 +15,21 @@ exports.register = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse('Email already registered', 400));
   }
 
-  // Create user
-  user = await User.create({
+  // Create user - include role if provided
+  const userData = {
     name,
     email,
     phone,
     password,
     address: req.body.address || {},
-  });
+  };
+
+  // Only set role if it's provided and valid
+  if (role && ['user', 'admin'].includes(role)) {
+    userData.role = role;
+  }
+
+  user = await User.create(userData);
 
   // Generate OTP
   const otp = user.generateOTP();
