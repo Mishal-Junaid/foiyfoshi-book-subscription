@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { FaUniversity, FaCopy, FaCheck, FaInfoCircle } from 'react-icons/fa';
+import { getBankInformation } from '../../services/bankService';
 
 const BankDetailsContainer = styled(motion.div)`
   background-color: #fff;
@@ -133,20 +134,54 @@ const ReferenceNote = styled.div`
 const BankDetails = ({ orderId }) => {
   const [copiedField, setCopiedField] = useState('');
   const [bankInfo, setBankInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    // In a real app, this would fetch from an API
-    // For now, using mock bank information
-    const mockBankInfo = {
-      bankName: 'Bank of Maldives',
-      accountName: 'FoiyFoshi Pvt Ltd',
-      accountNumber: '7701234567890',
-      branch: 'Male Branch',
-      currency: 'MVR',
-      routingNumber: '001234567'
+    const fetchBankInfo = async () => {
+      try {
+        const response = await getBankInformation();
+        const primaryBank = response.data?.find(bank => bank.isPrimary && bank.isActive) || response.data?.[0];
+        
+        if (primaryBank) {
+          setBankInfo({
+            bankName: primaryBank.bankName,
+            accountName: primaryBank.accountName,
+            accountNumber: primaryBank.accountNumber,
+            branch: primaryBank.branch,
+            currency: primaryBank.currency,
+            routingNumber: primaryBank.routingNumber,
+            paymentInstructions: primaryBank.paymentInstructions
+          });
+        } else {
+          // Fallback to default bank info if no bank configured
+          setBankInfo({
+            bankName: 'Bank of Maldives',
+            accountName: 'FoiyFoshi Pvt Ltd',
+            accountNumber: '7701234567890',
+            branch: 'Male Branch',
+            currency: 'MVR',
+            routingNumber: '001234567',
+            paymentInstructions: 'Please use your order number as the payment reference.'
+          });
+        }
+      } catch (error) {
+        console.error('Failed to fetch bank information:', error);
+        // Use fallback bank info on error
+        setBankInfo({
+          bankName: 'Bank of Maldives',
+          accountName: 'FoiyFoshi Pvt Ltd',
+          accountNumber: '7701234567890',
+          branch: 'Male Branch',
+          currency: 'MVR',
+          routingNumber: '001234567',
+          paymentInstructions: 'Please use your order number as the payment reference.'
+        });
+      } finally {
+        setLoading(false);
+      }
     };
     
-    setBankInfo(mockBankInfo);
+    fetchBankInfo();
   }, []);
   
   const handleCopy = async (text, field) => {
@@ -159,8 +194,20 @@ const BankDetails = ({ orderId }) => {
     }
   };
   
-  if (!bankInfo) {
-    return null;
+  if (!bankInfo || loading) {
+    return (
+      <BankDetailsContainer
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <BankHeader>
+          <FaUniversity />
+          <h3>{loading ? 'Loading Bank Details...' : 'Bank Transfer Details'}</h3>
+        </BankHeader>
+        {loading && <div style={{ textAlign: 'center', padding: '2rem', color: '#666' }}>Loading...</div>}
+      </BankDetailsContainer>
+    );
   }
   
   return (
@@ -226,13 +273,9 @@ const BankDetails = ({ orderId }) => {
           <FaInfoCircle />
           Payment Instructions
         </h4>
-        <ol>
-          <li>Transfer the exact order amount to the bank account above</li>
-          <li>Keep your transaction receipt/screenshot</li>
-          <li>Upload the receipt when completing your order</li>
-          <li>Include your order number in the transfer reference if possible</li>
-          <li>Your order will be processed once payment is verified</li>
-        </ol>
+        <div style={{ fontSize: '0.9rem', lineHeight: '1.5' }}>
+          {bankInfo.paymentInstructions || 'Please transfer the exact order amount to the bank account above and upload your receipt.'}
+        </div>
       </InstructionsBox>
       
       {orderId && (

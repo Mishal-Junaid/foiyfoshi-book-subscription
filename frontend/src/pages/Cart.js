@@ -298,7 +298,7 @@ const Cart = () => {
   
   // Calculate cart totals
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const shippingCost = subtotal > 1000 ? 0 : 50;
+  const shippingCost = 0; // Free shipping for all orders
   const total = subtotal + shippingCost - discountAmount;
   
   const handleQuantityChange = (itemId, change) => {

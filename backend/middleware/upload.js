@@ -37,7 +37,15 @@ const contentStorage = multer.diskStorage({
 // Configure storage for payment receipts
 const receiptStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, '../uploads/receipts'));
+    const destPath = path.join(__dirname, '../uploads/receipts');
+    
+    // Check if directory exists and create it if it doesn't
+    const fs = require('fs');
+    if (!fs.existsSync(destPath)) {
+      fs.mkdirSync(destPath, { recursive: true });
+    }
+    
+    cb(null, destPath);
   },
   filename: function (req, file, cb) {
     cb(
