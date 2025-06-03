@@ -56,7 +56,12 @@ app.use(express.urlencoded({ extended: false }));
 // CORS
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
-    ? [process.env.CORS_ORIGIN, 'https://foiyfoshi.netlify.app', 'https://your-custom-domain.com']
+    ? [
+        process.env.CORS_ORIGIN, 
+        'https://foiyfoshi.netlify.app', 
+        'https://foiy-foshi.netlify.app',  // Correct URL with hyphen
+        'https://your-custom-domain.com'
+      ]
     : ['http://localhost:3000', 'http://localhost:3001'],
   credentials: true,
   optionsSuccessStatus: 200
