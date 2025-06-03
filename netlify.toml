@@ -1,0 +1,53 @@
+[build]
+  # Frontend build command
+  command = "npm run build:frontend"
+  
+  # Frontend build output directory
+  publish = "frontend/build"
+  
+  # Environment variables for build
+  environment = { NODE_ENV = "production" }
+
+[build.environment]
+  # Build environment
+  NODE_VERSION = "18"
+  NPM_VERSION = "8"
+
+# Frontend routing (SPA)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# API redirects to backend (if using separate backend hosting)
+[[redirects]]
+  from = "/api/*"
+  to = "https://foiyfoshi-backend.onrender.com/api/:splat"
+  status = 200
+  force = true
+
+# Security headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://foiyfoshi-backend.onrender.com;"
+
+# Cache static assets
+[[headers]]
+  for = "/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable" 

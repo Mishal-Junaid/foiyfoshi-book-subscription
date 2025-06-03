@@ -1,0 +1,23 @@
+{
+  "name": "foiyfoshi-app",
+  "version": "1.0.0",
+  "description": "FoiyFoshi Book Subscription E-commerce Platform",
+  "scripts": {
+    "start": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "backend": "cd backend && set NODE_ENV=development&& set JWT_SECRET=foiyfoshi_secret_key_2024&& set JWT_EXPIRE=30d&& set PORT=5000&& set MONGO_URI=mongodb://localhost:27017/foiyfoshi&& node server.js",
+    "frontend": "cd frontend && npm start",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "build": "cd frontend && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "start:production": "cd backend && npm start",
+    "deploy:check": "npm run build:frontend && echo Production build completed successfully",
+    "clean": "cd frontend && rm -rf build && cd ../backend && rm -rf uploads && mkdir uploads"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": ["ecommerce", "books", "subscription", "maldives"],
+  "author": "FoiyFoshi Team",
+  "license": "MIT"
+} 
